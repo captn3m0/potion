@@ -25,14 +25,18 @@ body
 		margin-left 3px
 		color #777
 		font-size 14px
+	.text
+		width auto
+		display inline-table
+		margin-left 18px
 	.busy
 		background-image url("assets/busy.gif")
 		height 16px
 		width 16px
-		display inline-block
-		margin-left 20px
+		display inline-table
 		position relative
 		top -5px
+		right -20px
 		opacity 1
 		transition opacity .3s ease-in-out
 	.busy.hidden 
@@ -41,7 +45,16 @@ body
 	fullpage()
 	z-index 20
 	box-sizing border-box
-
+.notice
+	width 60%
+	margin-left 20%
+	margin-top 40px
+	height auto
+.notice.error
+	box-sizing border-box
+	padding 15px
+	border-radius 4px
+	border 1px red solid
 .login-div
 
 	margin-top 40px
@@ -142,3 +155,12 @@ select
 	&:focus 
 		outline none
 		border-bottom-color #33b5e5
+
+select + input#branchname
+	display inline-block
+	margin-left 30px
+	border-left 6px #EEE solid
+	padding 10px
+	font-size 22px 
+	color #555
+	
