@@ -11,7 +11,7 @@ Potion =
 	controller: 
 		#Login controller handles login information
 		login: ()->
-			$('#password').keyup (e)->
+			$('#password,#username').keyup (e)->
 				$('#login').click() if e.keyCode==13
 			$('#login').click ()->
 
@@ -26,6 +26,8 @@ Potion =
 				user = Potion.github.getUser();
 				#After callback to handle the repos list
 				after =(err,repos)->
+					if err
+						$('.notice').html("<p>There was an error while logging in to your account. Please check your username (and password).").addClass('error')
 					Potion.busy.hide()
 					Potion.controller.choose repos
 				#We use different functions based on
@@ -37,6 +39,8 @@ Potion =
 					#So we freestyle and use JQuery
 					$.getJSON "https://api.github.com/users/"+username+"/repos", (data)->
 						after null,data
+					.error ()->
+						after true,null
 
 		#Choose a repository and a branch
 		choose: (repos)->
