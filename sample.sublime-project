@@ -1,0 +1,20 @@
+{
+	"folders":
+	[
+		{
+			"path": "/home/nemo/projects/personal/potion"
+		}
+	],
+	"settings":
+	{
+		"tab_size": 4
+	},
+	"build_systems":[
+		{
+			"name": "Potion",
+			"cmd": ["$project_path/src/build.sh"],
+			"file_regex": "^.+",
+			"shell": true
+		}
+	]
+}
