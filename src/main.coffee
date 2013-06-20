@@ -14,16 +14,30 @@ Potion =
 			$('#password').keyup (e)->
 				$('#login').click() if e.keyCode==13
 			$('#login').click ()->
+
+				Potion.busy.show()
+				username=$('#username').val()
+				password=$('#password').val()
 				Potion.github = new Github {
-				  username: $('#username').val(),
-				  password: $('#password').val(),
+				  username: username,
+				  password: password,
 				  auth: "basic"
 				};
 				user = Potion.github.getUser();
-				Potion.busy.show()
-				user.repos (err,repos)->
+				#After callback to handle the repos list
+				after =(err,repos)->
 					Potion.busy.hide()
 					Potion.controller.choose repos
+				#We use different functions based on
+				#whether we have password or not
+				if password.length>0
+					user.repos after
+				else
+					#Our github lib doesn't support this
+					#So we freestyle and use JQuery
+					$.getJSON "https://api.github.com/users/"+username+"/repos", (data)->
+						after null,data
+
 		#Choose a repository and a branch
 		choose: (repos)->
 			Potion.render "choose", {list:repos}
