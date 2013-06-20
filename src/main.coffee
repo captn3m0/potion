@@ -4,21 +4,30 @@ _.templateSettings =
 
 #Our App
 Potion = 
-	
-	attachEvents: ()->
-		$(document).on 'click', '.login-submit', (e)->
-			Potion.render "choose"
-		null
-	render: (page,data={})->
+	render: (page,data={},controller)->
 		$.get "views/"+page+".html", (html)->
 			html=_.template html, data
-			$('body').html(html)
-		null
-	init: ()->
-		console.log 1
-		Potion.render "login"
-		Potion.attachEvents()
-		null
+			$('body').html html
+			controller()
+	controller: 
+		#Login controller handles login information
+		login: ()->
+			$('#password').keyup (e)->
+				$('#login').click() if e.keyCode==13
+			$('#login').click ()->
+				Potion.github = new Github {
+				  username: $('#username').val(),
+				  password: $('#password').val(),
+				  auth: "basic"
+				};
+				user = Potion.github.getUser();
+				user.repos (err,repos)->
+					Potion.render "choose", repos, Potion.controller.choose
+		choose: ()->
+			#yet to fill
 
+				
+	init: ()->
+		Potion.render "login", {}, Potion.controller.login
 
 Potion.init()
