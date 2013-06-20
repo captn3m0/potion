@@ -20,6 +20,7 @@ body
 	font-size 48px
 	color #444
 	margin 30px 0 10px 0
+	text-align center
 	.subtext
 		margin-left 3px
 		color #777
@@ -30,45 +31,44 @@ body
 	z-index 20
 	box-sizing border-box
 
-
-.left-side
-	position absolute
-	top 0px
-	left 20px
-	height auto
-	width 30%
-	box-sizing border-box
-
 .login-div
+
 	margin-top 40px
-	//border-top 6px #EEE solid
-	//border-bottom 6px #EEE solid
+	margin-left 20%
+	margin-right 20%
+	width 60%
+	box-sizing border-box
+	border-top 6px #EEE solid
+	border-bottom 6px #EEE solid
 	padding-bottom 30px
 	h3.title 
 		font-size 36px
-		margin 30px 0 10px 0 
+		margin 30px 0 20px 0 
 		usefont()
 	input
 		background none
 		border none
-		margin-top 12px
+		margin-top 15px
+		display block
+		text-align left
 		usefont()
 		&:focus
 			outline none
 	input[type='text'], input[type='password']
 		padding 8px 10px 6px 10px
-		//border-left 6px #EEE solid
+		border-left 6px #EEE solid
 		font-size 26px
 		color #444
 		transition all .5s ease
-		border-bottom 1px #D6D6D6 solid
-		width 242px
+		//border-bottom 1px #D6D6D6 solid
 		&:focus
 			outline none
-			border-bottom-color #33b5e5
-			//border-left-color #33b5e5
+			//border-bottom-color #33b5e5
+			border-left-color #33b5e5
 		&:focus:-webkit-input-placeholder
 			color #666
+	input[type='password']:-webkit-input-placeholder
+		padding-left 20px
 
 .img-holder
 	background-color #33b5e5
@@ -93,8 +93,41 @@ body
 	color #FFF
 	border-radius 3px
 	transition all .3s ease-in-out
+	cursor pointer
 	&:hover
-		background-color #444
+		background-color #555
 	&:active
 		background-color #3a3a3a
 		box-shadow inset 0px 2px 6px 0px rgba(0,0,0,0.1)
+.btn.disabled
+	opacity 0.7
+	background-color #666
+	&:hover, &:active, &:focus
+		background-color #666
+		outline none
+		box-shadow none
+
+// Select Styles
+select
+	appearance(none)
+	border none
+	background none
+	usefont()
+	font-size 18px
+	color #555
+	padding 10px 20px 10px 10px
+	display inline-block
+	margin-right 50px
+	position relative
+	//border-bottom 1px #EEE solid
+	border-left 6px #EEE solid
+	transition all .3s ease-in-out
+	cursor pointer
+	option
+		padding 6px 15px 8px 15px
+		border none
+		box-shadow none
+
+	&:focus 
+		outline none
+		border-bottom-color #33b5e5

@@ -24,6 +24,7 @@ body {
   font-size: 48px;
   color: #444;
   margin: 30px 0 10px 0;
+  text-align: center;
 }
 .main-title .subtext {
   margin-left: 3px;
@@ -39,28 +40,28 @@ body {
   z-index: 20;
   box-sizing: border-box;
 }
-.left-side {
-  position: absolute;
-  top: 0px;
-  left: 20px;
-  height: auto;
-  width: 30%;
-  box-sizing: border-box;
-}
 .login-div {
   margin-top: 40px;
+  margin-left: 20%;
+  margin-right: 20%;
+  width: 60%;
+  box-sizing: border-box;
+  border-top: 6px #eee solid;
+  border-bottom: 6px #eee solid;
   padding-bottom: 30px;
 }
 .login-div h3.title {
   font-size: 36px;
-  margin: 30px 0 10px 0;
+  margin: 30px 0 20px 0;
   font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
   font-weight: normal;
 }
 .login-div input {
   background: none;
   border: none;
-  margin-top: 12px;
+  margin-top: 15px;
+  display: block;
+  text-align: left;
   font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
   font-weight: normal;
 }
@@ -70,20 +71,22 @@ body {
 .login-div input[type='text'],
 .login-div input[type='password'] {
   padding: 8px 10px 6px 10px;
+  border-left: 6px #eee solid;
   font-size: 26px;
   color: #444;
   transition: all 0.5s ease;
-  border-bottom: 1px #d6d6d6 solid;
-  width: 242px;
 }
 .login-div input[type='text']:focus,
 .login-div input[type='password']:focus {
   outline: none;
-  border-bottom-color: #33b5e5;
+  border-left-color: #33b5e5;
 }
 .login-div input[type='text']:focus:-webkit-input-placeholder,
 .login-div input[type='password']:focus:-webkit-input-placeholder {
   color: #666;
+}
+.login-div input[type='password']:-webkit-input-placeholder {
+  padding-left: 20px;
 }
 .img-holder {
   background-color: #33b5e5;
@@ -110,11 +113,52 @@ body {
   color: #fff;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 .btn:hover {
-  background-color: #444;
+  background-color: #555;
 }
 .btn:active {
   background-color: #3a3a3a;
   box-shadow: inset 0px 2px 6px 0px rgba(0,0,0,0.1);
+}
+.btn.disabled {
+  opacity: 0.7;
+  background-color: #666;
+}
+.btn.disabled:hover,
+.btn.disabled:active,
+.btn.disabled:focus {
+  background-color: #666;
+  outline: none;
+  box-shadow: none;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  color: #555;
+  padding: 10px 20px 10px 10px;
+  display: inline-block;
+  margin-right: 50px;
+  position: relative;
+  border-left: 6px #eee solid;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+select option {
+  padding: 6px 15px 8px 15px;
+  border: none;
+  box-shadow: none;
+}
+select:focus {
+  outline: none;
+  border-bottom-color: #33b5e5;
 }

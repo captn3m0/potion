@@ -1,6 +1,7 @@
 echo ".jade -> .html"
 jade . -P -D -o ../views/
 mv ../views/index.html ..
+
 echo ".styl -> .css"
 stylus style.styl -o ..
 
