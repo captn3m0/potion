@@ -25,7 +25,18 @@ body
 		margin-left 3px
 		color #777
 		font-size 14px
-
+	.busy
+		background-image url("assets/busy.gif")
+		height 16px
+		width 16px
+		display inline-block
+		margin-left 20px
+		position relative
+		top -5px
+		opacity 1
+		transition opacity .3s ease-in-out
+	.busy.hidden 
+		opacity 0
 .wrapper
 	fullpage()
 	z-index 20
@@ -131,8 +142,3 @@ select
 	&:focus 
 		outline none
 		border-bottom-color #33b5e5
-.busy
-	background-image "assets/busy.gif"
-	height 16px
-	width 16px
-	display none

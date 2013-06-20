@@ -1,15 +1,15 @@
 .top-line
-	.wrapper
-		.main-title 
+.wrapper
+	.main-title 
+		.text Potion
 			.busy
-			.text Potion
-			.subtext Editor for Jekyll blogs
-		.login-div
-			h3.title Select Repository and Branch
-			select.repos
-				option(selected) Repository
-				each repo in list
-					option(value="#{repo.name}") #{repo.name}
-			input(placeholder="Branch Name", value="master")
-			.full-row
-				button.btn Next
+		.subtext Editor for Jekyll blogs
+	.login-div
+		h3.title Select Repository and Branch
+		select.repos
+			option(selected) Repository
+			each repo in list
+				option(value="#{repo.name}") #{repo.name}
+		input(placeholder="Branch Name", value="master")
+		.full-row
+			button.btn Next

@@ -1,4 +1,4 @@
-cd src
+#cd src
 echo ".jade -> .js"
 clientjade *.jade  > ../views.js
 
