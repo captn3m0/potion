@@ -1,0 +1,120 @@
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: #fff;
+  color: #444;
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+}
+.top-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-color: #444;
+}
+.main-title {
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+  font-size: 48px;
+  color: #444;
+  margin: 30px 0 10px 0;
+}
+.main-title .subtext {
+  margin-left: 3px;
+  color: #777;
+  font-size: 14px;
+}
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  box-sizing: border-box;
+}
+.left-side {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  height: auto;
+  width: 30%;
+  box-sizing: border-box;
+}
+.login-div {
+  margin-top: 40px;
+  padding-bottom: 30px;
+}
+.login-div h3.title {
+  font-size: 36px;
+  margin: 30px 0 10px 0;
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+}
+.login-div input {
+  background: none;
+  border: none;
+  margin-top: 12px;
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+}
+.login-div input:focus {
+  outline: none;
+}
+.login-div input[type='text'],
+.login-div input[type='password'] {
+  padding: 8px 10px 6px 10px;
+  font-size: 26px;
+  color: #444;
+  transition: all 0.5s ease;
+  border-bottom: 1px #d6d6d6 solid;
+  width: 242px;
+}
+.login-div input[type='text']:focus,
+.login-div input[type='password']:focus {
+  outline: none;
+  border-bottom-color: #33b5e5;
+}
+.login-div input[type='text']:focus:-webkit-input-placeholder,
+.login-div input[type='password']:focus:-webkit-input-placeholder {
+  color: #666;
+}
+.img-holder {
+  background-color: #33b5e5;
+  width: 256px;
+  height: 256px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+.full-row {
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+.btn {
+  background: none;
+  border: none;
+  font-family: "Ubuntu Light", Segoe UI Light, Helevetica Neue, sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 10px 20px 12px 20px;
+  background-color: #444;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+  background-color: #444;
+}
+.btn:active {
+  background-color: #3a3a3a;
+  box-shadow: inset 0px 2px 6px 0px rgba(0,0,0,0.1);
+}

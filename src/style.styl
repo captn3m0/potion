@@ -1,0 +1,100 @@
+@import 'mixins.styl'
+
+body
+	fullpage()
+	z-index 10
+	background-color #FFF
+	color #444
+	usefont()
+
+.top-line
+	position fixed 
+	top 0
+	left 0
+	right 0
+	height 10px
+	background-color #444
+
+.main-title
+	usefont()
+	font-size 48px
+	color #444
+	margin 30px 0 10px 0
+	.subtext
+		margin-left 3px
+		color #777
+		font-size 14px
+
+.wrapper
+	fullpage()
+	z-index 20
+	box-sizing border-box
+
+
+.left-side
+	position absolute
+	top 0px
+	left 20px
+	height auto
+	width 30%
+	box-sizing border-box
+
+.login-div
+	margin-top 40px
+	//border-top 6px #EEE solid
+	//border-bottom 6px #EEE solid
+	padding-bottom 30px
+	h3.title 
+		font-size 36px
+		margin 30px 0 10px 0 
+		usefont()
+	input
+		background none
+		border none
+		margin-top 12px
+		usefont()
+		&:focus
+			outline none
+	input[type='text'], input[type='password']
+		padding 8px 10px 6px 10px
+		//border-left 6px #EEE solid
+		font-size 26px
+		color #444
+		transition all .5s ease
+		border-bottom 1px #D6D6D6 solid
+		width 242px
+		&:focus
+			outline none
+			border-bottom-color #33b5e5
+			//border-left-color #33b5e5
+		&:focus:-webkit-input-placeholder
+			color #666
+
+.img-holder
+	background-color #33b5e5
+	width 256px
+	height 256px
+	box-sizing border-box
+	box-shadow 0px 0px 4px 0px rgba(0,0,0,0.1)
+	margin-top 20px
+
+.full-row
+	width 100%
+	height auto
+	margin-top 30px
+	margin-bottom 5px
+.btn
+	background none
+	border none
+	usefont()
+	font-size 18px
+	padding 10px 20px 12px 20px
+	background-color #444
+	color #FFF
+	border-radius 3px
+	transition all .3s ease-in-out
+	&:hover
+		background-color #444
+	&:active
+		background-color #3a3a3a
+		box-shadow inset 0px 2px 6px 0px rgba(0,0,0,0.1)
