@@ -2,14 +2,13 @@
 .wrapper
 	.main-title 
 		.text Potion
-			.busy
+			.busy.hidden
 		.subtext Editor for Jekyll blogs
 	.login-div
 		h3.title Select Repository and Branch
-		select.repos
-			option(selected) Repository
+		select#reponame.repos
 			each repo in list
-				option(value="#{repo.name}") #{repo.name}
-		input(placeholder="Branch Name", value="master")
+				option(value="#{repo.full_name}") #{repo.name}
+		input#branchname(placeholder="Branch Name", value="master")
 		.full-row
-			button.btn Next
+			button#continue.btn Next
