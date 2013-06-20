@@ -53,11 +53,11 @@ Potion =
 					#Break up the tree into drafts and posts
 					drafts=posts=[]
 					for file in data
-						if file.path.slice(0,8)==="_drafts/"
-							drafts[]=file
-						if file.path.slice(0,7)==="_posts/"
-							posts[]=file
-					Potion.render "admin" {drafts:drafts,posts:posts} Potion.controller.admin
+						if file.path.slice(0,8)=="_drafts/"
+							drafts.push file
+						if file.path.slice(0,7)=="_posts/"
+							posts.push file
+					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 					
 		admin: (drafts, posts)->
 			console.log drafts
