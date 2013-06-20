@@ -2,12 +2,12 @@
 Potion = 
 	render: (page,data={},controller)->
 		x=jade.render(document.body, page, data)
-		controller()
+		controller?()
 	busy:
 		show: ()->
-			$('.busy').show()
+			$('.busy').removeClass('hidden')
 		hide: ()->
-			$('.busy').hide()
+			$('.busy').addClass('hidden')
 	controller: 
 		#Login controller handles login information
 		login: ()->
@@ -22,10 +22,22 @@ Potion =
 				user = Potion.github.getUser();
 				Potion.busy.show()
 				user.repos (err,repos)->
-					Potion.busy.show()
-					Potion.render "choose", {list:repos}, Potion.controller.choose
-		choose: ()->
-			#yet to fill
+					Potion.busy.hide()
+					Potion.controller.choose repos
+		#Choose a repository and a branch
+		choose: (repos)->
+			Potion.render "choose", {list:repos}
+			$('#continue').click ()->
+				reponame=$('#reponame').val().split('/')[1]
+				username=$('#reponame').val().split('/')[0]
+				branch=$('#branchname').val()
+				repo = Potion.github.getRepo(username, reponame);
+				#Make requests to github to get the list of files
+				Potion.busy.show()
+				repo.getTree branch+'?recursive=true', (err,tree)->
+					Potion.busy.hide()
+					console.log err if err
+					console.log tree
 				
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
@@ -33,6 +45,4 @@ Potion =
 $(document).ready ()->
 	Potion.init()
 
-.ajaxComplete ()->
-	$('.busy').hide()
-.ajaxStart ()->
+#We will setup routing later...
