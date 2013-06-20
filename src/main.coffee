@@ -48,11 +48,20 @@ Potion =
 				repo = Potion.github.getRepo(username, reponame);
 				#Make requests to github to get the list of files
 				Potion.busy.show()
-				repo.getTree branch+'?recursive=true', (err,tree)->
+				repo.getTree branch+'?recursive=true', (err,data)->
 					Potion.busy.hide()
-					console.log err if err
-					console.log tree
-				
+					#Break up the tree into drafts and posts
+					drafts=posts=[]
+					for file in data
+						if file.path.slice(0,8)==="_drafts/"
+							drafts[]=file
+						if file.path.slice(0,7)==="_posts/"
+							posts[]=file
+					Potion.render "admin" {drafts:drafts,posts:posts} Potion.controller.admin
+					
+		admin: (drafts, posts)->
+			console.log drafts
+			console.log posts
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 
