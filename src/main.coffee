@@ -1,14 +1,13 @@
-#Configuration Stuff
-_.templateSettings =
-  interpolate : /\{\{(.+?)\}\}/g #Gives us mustache style templating
-
 #Our App
 Potion = 
 	render: (page,data={},controller)->
-		$.get "views/"+page+".html", (html)->
-			html=_.template html, data
-			$('body').html html
-			controller()
+		x=jade.render(document.body, page, data)
+		controller()
+	busy:
+		show: ()->
+			$('.busy').show()
+		hide: ()->
+			$('.busy').hide()
 	controller: 
 		#Login controller handles login information
 		login: ()->
@@ -21,13 +20,19 @@ Potion =
 				  auth: "basic"
 				};
 				user = Potion.github.getUser();
+				Potion.busy.show()
 				user.repos (err,repos)->
-					Potion.render "choose", repos, Potion.controller.choose
+					Potion.busy.show()
+					Potion.render "choose", {list:repos}, Potion.controller.choose
 		choose: ()->
 			#yet to fill
-
 				
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 
-Potion.init()
+$(document).ready ()->
+	Potion.init()
+
+.ajaxComplete ()->
+	$('.busy').hide()
+.ajaxStart ()->

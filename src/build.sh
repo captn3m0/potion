@@ -1,6 +1,6 @@
-echo ".jade -> .html"
-jade . -P -D -o ../views/
-mv ../views/index.html ..
+cd src
+echo ".jade -> .js"
+clientjade *.jade  > ../views.js
 
 echo ".styl -> .css"
 stylus style.styl -o ..
