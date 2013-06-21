@@ -1,8 +1,9 @@
 #Our App
 Potion = 
 	render: (page,data={},controller)->
+		#order is DOM, TEMPLATE, DATA
 		x=jade.render(document.body, page, data)
-		controller?()
+		controller?(data)
 	busy:
 		show: ()->
 			$('.busy').removeClass('hidden')
@@ -55,17 +56,15 @@ Potion =
 				repo.getTree branch+'?recursive=true', (err,data)->
 					Potion.busy.hide()
 					#Break up the tree into drafts and posts
-					drafts=posts=[]
+					drafts=[]
+					posts=[]
 					for file in data
-						if file.path.slice(0,8)=="_drafts/"
-							drafts.push file
-						if file.path.slice(0,7)=="_posts/"
-							posts.push file
+						drafts.push file if file.path.slice(0,8)=="_drafts/"
+						posts.push  file if file.path.slice(0,7)=="_posts/"
 					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 					
-		admin: (drafts, posts)->
-			console.log drafts
-			console.log posts
+		admin: (files)->
+			console.log files
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 
