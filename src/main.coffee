@@ -47,27 +47,33 @@ Potion =
 		choose: (repos)->
 			Potion.render "choose", {list:repos}
 			$('#continue').click ()->
-				reponame=$('#reponame').val().split('/')[1]
-				username=$('#reponame').val().split('/')[0]
-				branch=$('#branchname').val()
-				repo = Potion.github.getRepo(username, reponame);
+				Potion.github.repo=$('#reponame').val().split('/')[1]
+				Potion.github.user=$('#reponame').val().split('/')[0]
+				Potion.github.branch=$('#branchname').val()
+				#We store this data
 				#Make requests to github to get the list of files
 				Potion.busy.show()
-				repo.getTree branch+'?recursive=true', (err,data)->
+				Potion.Util.getFiles (drafts,posts)->
 					Potion.busy.hide()
-					#Break up the tree into drafts and posts
-					drafts=[]
-					posts=[]
-					for file in data
-						drafts.push file if file.path.slice(0,8)=="_drafts/"
-						posts.push  file if file.path.slice(0,7)=="_posts/"
 					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
-					
 		admin: (files)->
 			console.log files
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
-
+	Util:
+		getFiles: (cb)->
+			repo = Potion.github.getRepo Potion.github.user, Potion.github.repo
+			repo.getTree Potion.github.branch+'?recursive=true', (err,data)->
+				if(err)
+					console.log err
+					return
+				#Break up the tree into drafts and posts
+				drafts=[]
+				posts=[]
+				for file in data
+					drafts.push file if file.path.slice(0,8)=="_drafts/"
+					posts.push  file if file.path.slice(0,7)=="_posts/"
+				cb?(drafts,posts)
 $(document).ready ()->
 	Potion.init()
 
