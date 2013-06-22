@@ -4,3 +4,11 @@
 		.text Potion
 			.busy.hidden
 		.subtext Editor for Jekyll blogs
+	h4 Drafts
+	ul
+	each file in drafts
+		li #{file.name}
+	h4 Posts
+	ul
+	each file in posts
+		li #{file.name}

@@ -57,7 +57,7 @@ Potion =
 					Potion.busy.hide()
 					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		admin: (files)->
-			console.log files
+			#console.log files
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 	Util:
@@ -71,9 +71,25 @@ Potion =
 				drafts=[]
 				posts=[]
 				for file in data
-					drafts.push file if file.path.slice(0,8)=="_drafts/"
-					posts.push  file if file.path.slice(0,7)=="_posts/"
+					if file.path.slice(0,8)=="_drafts/"
+						file.name=Potion.Util.pathToName file.path
+						drafts.push file
+					if file.path.slice(0,7)=="_posts/"
+						file.name=Potion.Util.pathToName file.path
+						posts.push file
+				#Reverse the arrays as they are in ascending order by date
+				posts=posts.reverse()
+				drafts=drafts.reverse()
 				cb?(drafts,posts)
+		pathToName: (path)->
+			#get the basename
+			path=path.split('/').reverse()[0];
+			#Remove the extension
+			path=path.substr 0, path.lastIndexOf('.')
+			#remove the date
+			name=path.match(/\d{4}-\d{1,2}-\d{1,2}-(.*)/)[1]
+			#Auto-return
+			name.replace(/-/g,' ').toTitleCase()
 $(document).ready ()->
 	Potion.init()
 
