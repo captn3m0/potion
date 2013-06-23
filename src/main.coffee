@@ -53,9 +53,12 @@ Potion =
 				#We store this data
 				#Make requests to github to get the list of files
 				Potion.busy.show()
-				Potion.Util.getFiles (drafts,posts)->
+				Potion.Util.getFiles (err,drafts,posts)->
 					Potion.busy.hide()
-					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
+					if(err)
+						$('.notice').addClass('error').append("<p>There was an error while fetching this repository. Are you sure its a jekyll repo?</p>")
+					else
+						Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		admin: (files)->
 			#console.log files
 	init: ()->
@@ -64,23 +67,22 @@ Potion =
 		getFiles: (cb)->
 			repo = Potion.github.getRepo Potion.github.user, Potion.github.repo
 			repo.getTree Potion.github.branch+'?recursive=true', (err,data)->
-				if(err)
-					console.log err
-					return
 				#Break up the tree into drafts and posts
-				drafts=[]
-				posts=[]
-				for file in data
-					if file.path.slice(0,8)=="_drafts/"
-						file.name=Potion.Util.pathToName file.path
-						drafts.push file
-					if file.path.slice(0,7)=="_posts/"
-						file.name=Potion.Util.pathToName file.path
-						posts.push file
-				#Reverse the arrays as they are in ascending order by date
-				posts=posts.reverse()
-				drafts=drafts.reverse()
-				cb?(drafts,posts)
+				if !err
+					drafts=[]
+					posts=[]
+					for file in data
+						if file.path.slice(0,8)=="_drafts/"
+							file.name=Potion.Util.pathToName file.path
+							drafts.push file
+						if file.path.slice(0,7)=="_posts/"
+							file.name=Potion.Util.pathToName file.path
+							posts.push file
+					err=true if posts.length==0 && drafts.length==0
+					#Reverse the arrays as they are in ascending order by date
+					posts=posts.reverse()
+					drafts=drafts.reverse()
+				cb? err, drafts, posts
 		pathToName: (path)->
 			#get the basename
 			path=path.split('/').reverse()[0];
