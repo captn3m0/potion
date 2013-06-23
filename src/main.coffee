@@ -38,7 +38,7 @@ Potion =
 				else
 					#Our github lib doesn't support this
 					#So we freestyle and use JQuery
-					$.getJSON "https://api.github.com/users/"+username+"/repos", (data)->
+					$.getJSON "https://api.github.com/users/"+username+"/repos?type=all&per_page=1000&sort=updated", (data)->
 						after null,data
 					.error ()->
 						after true,null
