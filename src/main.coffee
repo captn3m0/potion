@@ -60,13 +60,23 @@ Potion =
 					else
 						Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		admin: (files)->
-			#console.log files
+			$(".file a").click (e)->
+				filePath=e.target.getAttribute('data-path')
+				Potion.controller.editor filePath
+		editor: (path)->
+			Potion.busy.show()
+			Potion.github.repository.read Potion.github.branch, path, (err, data)->
+				Potion.busy.hide()
+				#Now we render the editor
+				Potion.render "editor", {text: data}, (text)->
+					console.log 1
+
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 	Util:
 		getFiles: (cb)->
-			repo = Potion.github.getRepo Potion.github.user, Potion.github.repo
-			repo.getTree Potion.github.branch+'?recursive=true', (err,data)->
+			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
+			Potion.github.repository.getTree Potion.github.branch+'?recursive=true', (err,data)->
 				#Break up the tree into drafts and posts
 				if !err
 					drafts=[]

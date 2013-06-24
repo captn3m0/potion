@@ -7,8 +7,10 @@
 	h4 Drafts
 	ul
 	each file in drafts
-		li #{file.name}
+		li.file
+			a(href="#", data-path="#{file.path}") #{file.name}
 	h4 Posts
 	ul
 	each file in posts
-		li #{file.name}
+		li.file
+			a(href="#", data-path="#{file.path}") #{file.name}
