@@ -12,7 +12,7 @@
 	"build_systems":[
 		{
 			"name": "Potion",
-			"cmd": ["$project_path/src/build.sh"],
+			"cmd": ["cd $project_path/src && ./build.sh"],
 			"file_regex": "^.+",
 			"shell": true
 		}
