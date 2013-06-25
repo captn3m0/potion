@@ -21,4 +21,4 @@ String.prototype.toTitleCase = function() {
             uppers[i].toUpperCase());
 
     return str;
-}
+};
