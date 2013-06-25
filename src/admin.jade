@@ -1,16 +1,19 @@
 .top-line
 .wrapper
-	.main-title 
-		.text Potion
-			.busy.hidden
-		.subtext Editor for Jekyll blogs
-	h4 Drafts
-	ul
-	each file in drafts
-		li.file
-			a(href="#", data-path="#{file.path}") #{file.name}
-	h4 Posts
-	ul
-	each file in posts
-		li.file
-			a(href="#", data-path="#{file.path}") #{file.name}
+	.left-pane
+		.main-title 
+			.text Potion
+				.busy.hidden
+			.subtext Editor for Jekyll blogs
+	.center-pane
+		h4 Drafts
+		ul
+			each file in drafts
+				li.file
+					a(href="#", data-path="#{file.path}") #{file.name}
+	.right-pane
+		h4 Posts
+		ul
+			each file in posts
+				li.file
+					a(href="#", data-path="#{file.path}") #{file.name}
