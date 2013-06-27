@@ -69,8 +69,7 @@ Potion =
 				Potion.busy.hide()
 				#Now we render the editor
 				Potion.render "editor", {text: data}, (text)->
-					wideArea()
-					$('.fullscreen').click()
+					alert("Rendered")
 
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
