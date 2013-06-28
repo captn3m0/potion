@@ -69,8 +69,7 @@ Potion =
 				Potion.busy.hide()
 				#Now we render the editor
 				Potion.render "editor", {text: data}, (text)->
-					alert("Rendered")
-
+					#Add hooks here
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 	Util:
