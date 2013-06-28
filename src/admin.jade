@@ -10,7 +10,7 @@
 		ul
 			each file in drafts
 				li.file
-					a(href="#", data-path="#{file.path}") #{file.name}
+					a(href="#", data-draft="true", data-path="#{file.path}") #{file.name}
 	.right-pane
 		h4 Posts
 		ul

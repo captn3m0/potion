@@ -1,3 +1,14 @@
 .top-line
 .wrapper
 	textarea #{text}
+	div.top-right.controls
+		if isDraft == true
+			div.btn.save Save Draft
+			br
+			div.btn.publish Publish
+		else
+			div.btn.save Save & Publish
+			br
+			div.btn.unpublish Unpublish
+		br
+		div.btn.admin Admin

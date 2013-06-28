@@ -62,13 +62,15 @@ Potion =
 		admin: (files)->
 			$(".file a").click (e)->
 				filePath=e.target.getAttribute('data-path')
-				Potion.controller.editor filePath
-		editor: (path)->
+				draft=true if e.target.getAttribute('data-draft')=="true"
+				#We send the draft data to make sure that the buttons are correct
+				Potion.controller.editor filePath, draft
+		editor: (path,draft=false)->
 			Potion.busy.show()
 			Potion.github.repository.read Potion.github.branch, path, (err, data)->
 				Potion.busy.hide()
 				#Now we render the editor
-				Potion.render "editor", {text: data}, (text)->
+				Potion.render "editor", {text: data, isDraft:draft}, (text)->
 					#Add hooks here
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
