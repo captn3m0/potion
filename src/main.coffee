@@ -56,7 +56,7 @@ Potion =
 				Potion.Util.getFiles (err,drafts,posts)->
 					Potion.busy.hide()
 					if(err)
-						$('.notice').addClass('error').append("<p>There was an error while fetching this repository. Are you sure its a jekyll repo?</p>")
+						$('.notice').addClass('error').html "<p>There was an error while fetching this repository. Are you sure its a jekyll repo?</p>"
 					else
 						Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		admin: (files)->
