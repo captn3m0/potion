@@ -53,12 +53,7 @@ Potion =
 				#We store this data
 				#Make requests to github to get the list of files
 				Potion.busy.show()
-				Potion.Util.getFiles (err,drafts,posts)->
-					Potion.busy.hide()
-					if(err)
-						$('.notice').addClass('error').html "<p>There was an error while fetching this repository. Are you sure its a jekyll repo?</p>"
-					else
-						Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
+				Potion.Util.showFiles()
 		admin: (files)->
 			$(".file a").click (e)->
 				filePath=e.target.getAttribute('data-path')
@@ -68,10 +63,13 @@ Potion =
 		editor: (path,draft=false)->
 			Potion.busy.show()
 			Potion.github.repository.read Potion.github.branch, path, (err, data)->
+				frontMatter=YAML.loadFront data
 				Potion.busy.hide()
 				#Now we render the editor
-				Potion.render "editor", {text: data, isDraft:draft}, (text)->
+				Potion.render "editor", {text: data, isDraft:draft, title:frontMatter.title}, (text)->
 					#Add hooks here
+					$('.admin').click (e)->
+						Potion.Util.showFiles()
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 	Util:
@@ -94,6 +92,13 @@ Potion =
 					posts=posts.reverse()
 					drafts=drafts.reverse()
 				cb? err, drafts, posts
+		showFiles: ()->
+			Potion.Util.getFiles (err,drafts,posts)->
+				Potion.busy.hide()
+				if(err)
+					$('.notice').addClass('error').html "<p>There was an error while fetching this repository. Are you sure its a jekyll repo?</p>"
+				else
+					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		pathToName: (path)->
 			#get the basename
 			path=path.split('/').reverse()[0];
