@@ -1,9 +1,9 @@
 .top-line
-	h2 #{title}
+	h2 #{title()}
 .wrapper
-	textarea #{text}
+	textarea #{data}
 	div.top-right.controls
-		if isDraft == true
+		if isDraft() == true
 			div.btn.save Save Draft
 			br
 			div.btn.publish Publish
@@ -13,3 +13,5 @@
 			div.btn.unpublish Unpublish
 		br
 		div.btn.admin Admin
+		br
+		div.btn.preview Preview

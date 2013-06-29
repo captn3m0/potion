@@ -1,5 +1,21 @@
 #Our App
-Potion = 
+class Post
+	constructor: (@path,cb)->
+		Potion.github.repository.read Potion.github.branch, @path, (err, data)=>
+			if !err
+				@data=data
+			cb?()
+	#save:
+		#Potion.
+	isDraft: ()->
+		@path.slice(0,7)=="_drafts"
+	toHTML: ()->
+		converter = new Showdown.converter();
+		converter.makeHtml @data
+	title: ()->
+		title=YAML.loadFront(@data)['title']
+
+Potion =
 	render: (page,data={},controller)->
 		#order is DOM, TEMPLATE, DATA
 		x=jade.render(document.body, page, data)
@@ -28,7 +44,7 @@ Potion =
 				#After callback to handle the repos list
 				after =(err,repos)->
 					if err
-						$('.notice').html("<p>There was an error while logging in to your account. Please check your username (and password).").addClass('error')
+						$('.notice').html("<p>There was an error while logging in to your account. Please check your username (and password). Please use your password if Potion is hitting the Github API rate-limits.").addClass('error')
 					Potion.busy.hide()
 					Potion.controller.choose repos
 				#We use different functions based on
@@ -59,17 +75,19 @@ Potion =
 				filePath=e.target.getAttribute('data-path')
 				draft=true if e.target.getAttribute('data-draft')=="true"
 				#We send the draft data to make sure that the buttons are correct
-				Potion.controller.editor filePath, draft
-		editor: (path,draft=false)->
+				Potion.post=new Post filePath, ()->
+					Potion.controller.editor()
+		editor: ()->
 			Potion.busy.show()
-			Potion.github.repository.read Potion.github.branch, path, (err, data)->
-				frontMatter=YAML.loadFront data
+			Potion.github.repository.read Potion.github.branch, Potion.post.path, (err, data)->
 				Potion.busy.hide()
 				#Now we render the editor
-				Potion.render "editor", {text: data, isDraft:draft, title:frontMatter.title}, (text)->
+				Potion.render "editor", Potion.post, ()->
 					#Add hooks here
 					$('.admin').click (e)->
 						Potion.Util.showFiles()
+					$('.save').click (e)->
+
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
 	Util:
