@@ -11,7 +11,8 @@ class Post
 		@path.slice(0,7)=="_drafts"
 	toHTML: ()->
 		converter = new Showdown.converter();
-		converter.makeHtml @data
+		sourceText=YAML.loadFront(@data)['__content']
+		converter.makeHtml sourceText
 	title: ()->
 		title=YAML.loadFront(@data)['title']
 
@@ -87,6 +88,13 @@ Potion =
 					$('.admin').click (e)->
 						Potion.Util.showFiles()
 					$('.save').click (e)->
+					$('.preview').click (e)->
+						if e.target.innerText=='Preview'
+							$('#editor').html Potion.post.toHTML()
+							e.target.innerText= 'Edit'
+						else
+							Potion.render "editor", Potion.post
+
 
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login

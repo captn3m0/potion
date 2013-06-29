@@ -1,7 +1,8 @@
 .top-line
 	h2 #{title()}
 .wrapper
-	textarea #{data}
+	div#editor
+		textarea #{data}
 	div.top-right.controls
 		if isDraft() == true
 			div.btn.save Save Draft
