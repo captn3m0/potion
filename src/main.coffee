@@ -133,7 +133,7 @@ Potion =
 						if file.path.slice(0,8)=="_drafts/"
 							file.name=Potion.Util.pathToName file.path
 							drafts.push file
-						if file.path.slice(0,7)=="_posts/"
+						if file.path.slice(0,7)=="_posts/" || file.path.slice(0,14)=="source/_posts/"
 							file.name=Potion.Util.pathToName file.path
 							posts.push file
 					err=true if posts.length==0 && drafts.length==0
