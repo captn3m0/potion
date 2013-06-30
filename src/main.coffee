@@ -25,6 +25,11 @@ class Post
 			title=YAML.loadFront(@data)['title']
 		catch
 			"Untitled"
+	save: ()->
+		repo=Potion.github.repository
+		commitMessage= "Updated "+@title()
+		repo.write Potion.github.branch, @path, @data, commitMessage, "utf-8", ()=>
+			alert("Post Saved")
 	attachEvents: ()->
 		#Add hooks here
 		$('.admin').click (e)->
@@ -33,10 +38,7 @@ class Post
 			@data=$(e.target).val()
 		#Just make an updated commit
 		$('.save').click (e)=>
-			repo=Potion.github.repository
-			commitMessage= "Updated "+@title()
-			repo.write Potion.github.branch, Potion.post.path, @data, commitMessage, ()->
-				alert("Post updated")
+			@save()
 		$('.preview').click (e)=>
 			if e.target.innerText=='Preview'
 				$('#editor textarea').hide()
