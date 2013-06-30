@@ -2,17 +2,18 @@
 	h2 #{title()}
 .wrapper
 	div#editor
-		textarea #{data}
+		textarea#textpad #{data}
+		div.preview
 	div.top-right.controls
 		if isDraft() == true
 			div.btn.save Save Draft
 			br
 			div.btn.publish Publish
 		else
-			div.btn.save Save & Publish
+			div.btn.save(title="Will result in two commits.") Save & Publish
 			br
-			div.btn.unpublish Unpublish
+			div.btn.unpublish(title="Will Move Post to drafts") Unpublish
 		br
-		div.btn.admin Admin
+		div.btn.admin(title="Go back to admin page") Admin
 		br
 		div.btn.preview Preview

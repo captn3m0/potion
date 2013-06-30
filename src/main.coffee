@@ -11,11 +11,42 @@ class Post
 		@path.slice(0,7)=="_drafts"
 	toHTML: ()->
 		converter = new Showdown.converter();
-		sourceText=YAML.loadFront(@data)['__content']
+		#Make sure that we do have YAML frontmatter.
+		#Lets people shoot them in their foot, but the UX is better.
+		try
+			yaml= YAML.loadFront(@data)
+			sourceText=yaml['__content']
+		catch err
+			#if no YAML was found, just accept complete blob as markdown
+			sourceText=@data
 		converter.makeHtml sourceText
 	title: ()->
-		title=YAML.loadFront(@data)['title']
-
+		try
+			title=YAML.loadFront(@data)['title']
+		catch
+			"Untitled"
+	attachEvents: ()->
+		#Add hooks here
+		$('.admin').click (e)->
+			Potion.Util.showFiles()
+		$('#textpad').bind 'keyup input propertychange', (e)=>
+			@data=$(e.target).val()
+		#Just make an updated commit
+		$('.save').click (e)=>
+			repo=Potion.github.repository
+			commitMessage= "Updated "+@title()
+			repo.write Potion.github.branch, Potion.post.path, @data, commitMessage, ()->
+				alert("Post updated")
+		$('.preview').click (e)=>
+			if e.target.innerText=='Preview'
+				$('#editor textarea').hide()
+				$('#editor .preview').html @toHTML()
+				$('#editor .preview').show()
+				$(e.target).text 'Edit'
+			else
+				$('#editor .preview').hide()
+				$('textarea').text(@data).show()
+				$(e.target).text 'Preview'
 Potion =
 	render: (page,data={},controller)->
 		#order is DOM, TEMPLATE, DATA
@@ -76,25 +107,15 @@ Potion =
 				filePath=e.target.getAttribute('data-path')
 				draft=true if e.target.getAttribute('data-draft')=="true"
 				#We send the draft data to make sure that the buttons are correct
+				Potion.busy.show()
 				Potion.post=new Post filePath, ()->
 					Potion.controller.editor()
 		editor: ()->
-			Potion.busy.show()
 			Potion.github.repository.read Potion.github.branch, Potion.post.path, (err, data)->
 				Potion.busy.hide()
 				#Now we render the editor
 				Potion.render "editor", Potion.post, ()->
-					#Add hooks here
-					$('.admin').click (e)->
-						Potion.Util.showFiles()
-					$('.save').click (e)->
-					$('.preview').click (e)->
-						if e.target.innerText=='Preview'
-							$('#editor').html Potion.post.toHTML()
-							e.target.innerText= 'Edit'
-						else
-							Potion.render "editor", Potion.post
-
+					Potion.post.attachEvents()
 
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
