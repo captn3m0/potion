@@ -39,7 +39,7 @@ class Post
 		#Just make an updated commit
 		$('.save').click (e)=>
 			@save()
-		$('.preview').click (e)=>
+		$('.previewbtn').click (e)=>
 			if e.target.innerText=='Preview'
 				$('#editor textarea').hide()
 				$('#editor .preview').html @toHTML()
