@@ -13,6 +13,7 @@ body
 	right 0
 	height 8px
 	background-color #444
+	z-index 100
 
 .main-title
 	usefont()
@@ -40,14 +41,23 @@ body
 		transition opacity .3s ease-in-out
 	.busy.hidden 
 		opacity 0
+.main-title.inleft
+	text-align left 
+	margin-left 20px
 .wrapper
 	fullpage()
 	z-index 20
 	box-sizing border-box
+	overflow hidden
 	.top-right
 		position fixed
 		top 50px
 		right 10px
+	h2
+		text-align center
+		font-weight normal
+		font-size 20px
+
 .notice
 	width 60%
 	margin-left 20%
@@ -240,24 +250,33 @@ select ~ input#branchname
 	width 430px
 
 textarea
-	padding 20px !important
-	padding-top 40px !important
-	border none !important
-	-webkit-box-sizing border-box !important
-	-moz-box-sizing border-box !important
-	box-sizing border-box !important
-	max-width 900px !important
-	height 100% !important
-	width 100% !important
-	outline none !important
-	margin 0 auto !important
-	font-size 20px !important
-	box-shadow none !important
-	resize none !important
-	line-height 1.6em !important
+	position absolute
+	top 60px
+	bottom 0
+	padding 20px
+	border none
+	box-sizing border-box
+	max-width 900px
+	width 100%
+	outline none
+	margin 0 auto
+	font-size 20px
+	box-shadow none
+	resize none
+	line-height 1.6em
 	display block
+	color #BBB
+	transition color .3s ease-in-out
+	&:hover, &:focus, &:active
+		color #444
+
 #editor
 	height 100%
 	margin-top 40px
 	.preview
 		display none
+
+
+
+
+@import 'responsive.styl'

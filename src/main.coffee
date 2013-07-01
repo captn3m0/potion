@@ -22,8 +22,8 @@ class Post
 		converter.makeHtml sourceText
 	title: ()->
 		try
-			title=YAML.loadFront(@data)['title']
-		catch
+			title = YAML.loadFront(@data)['title']
+		catch error
 			"Untitled"
 	save: ()->
 		repo=Potion.github.repository
@@ -118,9 +118,20 @@ Potion =
 				#Now we render the editor
 				Potion.render "editor", Potion.post, ()->
 					Potion.post.attachEvents()
+					Potion.fixLayout()
+					$(window).unbind('load').on 'load', Potion.fixLayout()
+					$(window).unbind('resize').on 'resize', Potion.fixLayout()
 
 	init: ()->
 		Potion.render "login", {}, Potion.controller.login
+	fixLayout: ()->
+		if not $("textarea").length then return 
+		ratio = 900/document.width
+		$("textarea").css {
+			'left': (document.width - 900)/2
+			'right': (document.width-900)/2
+			'max-width': parseInt(document.width*ratio).toString() + 'px'
+		}
 	Util:
 		getFiles: (cb)->
 			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
