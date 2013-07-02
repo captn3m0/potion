@@ -3,8 +3,10 @@ class Post
 	constructor: (@path,cb)->
 		Potion.github.repository.read Potion.github.branch, @path, (err, data)=>
 			if !err
-				@data=data
-			cb?()
+				@originalText=@data=data
+				cb?()
+			else
+				alert "There was an error in fetching this post"			
 	#save:
 		#Potion.
 	isDraft: ()->
@@ -20,22 +22,34 @@ class Post
 			#if no YAML was found, just accept complete blob as markdown
 			sourceText=@data
 		converter.makeHtml sourceText
+	hasChanged: ()->
+		@originalText!=@data
 	title: ()->
 		try
 			title = YAML.loadFront(@data)['title']
+			title||"Untitled"
 		catch error
 			"Untitled"
 	save: ()->
+		if !@hasChanged()
+			alert("No changes were made to the post.")
+			return 
+		Potion.busy.show()
 		repo=Potion.github.repository
 		commitMessage= "Updated "+@title()
-		repo.write Potion.github.branch, @path, @data, commitMessage, "utf-8", ()=>
-			alert("Post Saved")
+		repo.write Potion.github.branch, @path, @data, commitMessage, "utf-8", (err)=>
+			Potion.busy.hide()
+			if !err
+				alert "Post Saved"
+			else
+				alert("There was an error in saving your post. Are you logged in?")
 	attachEvents: ()->
 		#Add hooks here
 		$('.admin').click (e)->
 			Potion.Util.showFiles()
 		$('#textpad').bind 'keyup input propertychange', (e)=>
 			@data=$(e.target).val()
+			$('.title').text @title()
 		#Just make an updated commit
 		$('.save').click (e)=>
 			@save()
@@ -77,10 +91,12 @@ Potion =
 				user = Potion.github.getUser();
 				#After callback to handle the repos list
 				after =(err,repos)->
-					if err
+					if !err
+						Potion.busy.hide()
+						Potion.controller.choose repos
+					else
 						$('.notice').html("<p>There was an error while logging in to your account. Please check your username (and password). Please use your password if Potion is hitting the Github API rate-limits.").addClass('error')
-					Potion.busy.hide()
-					Potion.controller.choose repos
+					
 				#We use different functions based on
 				#whether we have password or not
 				if password.length>0
@@ -165,7 +181,11 @@ Potion =
 			#Remove the extension
 			path=path.substr 0, path.lastIndexOf('.')
 			#remove the date
-			name=path.match(/\d{4}-\d{1,2}-\d{1,2}-(.*)/)[1]
+			try
+				name=path.match(/\d{4}-\d{1,2}-\d{1,2}-(.*)/)[1]
+			catch err
+				#drafts are sometimes date-less in filenames
+				name=path
 			#Auto-return
 			name.replace(/-/g,' ').toTitleCase()
 $(document).ready ()->
