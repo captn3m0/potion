@@ -30,7 +30,7 @@ class Post
 			title || "Untitled"
 		catch error
 			"Untitled"
-	save: ()->
+	save: (cb)->
 		if !@hasChanged()
 			alert("No changes were made to the post.")
 			return 
@@ -42,7 +42,17 @@ class Post
 			if !err
 				alert "Post Saved"
 			else
-				alert("There was an error in saving your post. Are you logged in?")
+				alert "There was an error in saving your post. Are you logged in?"
+			cb?()
+	publish: ->
+		alert "Publishing the post"
+		#Move it to _posts folder
+		Potion.github.repository.move @path, "_posts/"+Potion.Util.basename(@path), (err)->
+			if !err
+				alert "Post published"
+			else
+				alert "There was an error in publishing the post. Are you logged in?"
+		Potion.busy.hide()
 	attachEvents: ()->
 		#Add hooks here
 		$('.admin').click (e)->
@@ -53,6 +63,14 @@ class Post
 		#Just make an updated commit
 		$('.save').click (e)=>
 			@save()
+			@originalText=@data #so that hasChanged() now returns false
+		$('.publish').click (e)=>
+			if Potion.post.hasChanged()
+				@save ()->
+					Potion.busy.show()
+					@publish()
+			else
+				@publish()
 		$('.previewbtn').click (e)=>
 			if e.target.innerText == 'Preview'
 				$('#editor textarea').hide()
@@ -176,7 +194,7 @@ Potion =
 					Potion.render "admin", {drafts:drafts,posts:posts}, Potion.controller.admin
 		pathToName: (path)->
 			#get the basename
-			path = path.split('/').reverse()[0];
+			path = Potion.Util.basename path
 			#Remove the extension
 			path = path.substr 0, path.lastIndexOf('.')
 			#remove the date
@@ -187,6 +205,9 @@ Potion =
 				name = path
 			#Auto-return
 			name.replace(/-/g,' ').toTitleCase()
+		basename: (path)->
+			path.split('/').reverse()[0];
+
 $(document).ready ()->
 	Potion.init()
 
