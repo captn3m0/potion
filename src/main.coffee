@@ -45,14 +45,26 @@ class Post
 				alert "There was an error in saving your post. Are you logged in?"
 			cb?()
 	publish: ->
-		alert "Publishing the post"
 		#Move it to _posts folder
-		Potion.github.repository.move @path, "_posts/"+Potion.Util.basename(@path), (err)->
+		newPath = "_posts/"+Potion.Util.basename(@path)
+		Potion.github.repository.move Potion.github.branch, @path, newPath, (err)=>
 			if !err
 				alert "Post published"
 			else
 				alert "There was an error in publishing the post. Are you logged in?"
-		Potion.busy.hide()
+			Potion.busy.hide()
+			@path = newPath
+			Potion.controller.editor()
+	unpublish: ->
+		newPath = "_drafts/"+Potion.Util.basename(@path)
+		Potion.github.repository.move Potion.github.branch, @path, newPath, (err)=>
+			if !err
+				alert "Post moved to drafts."
+			else
+				alert "There was an error in unpublishing the post. Are you logged in?"
+			Potion.busy.hide()
+			@path=newPath
+			Potion.controller.editor()
 	attachEvents: ()->
 		#Add hooks here
 		$('.admin').click (e)->
@@ -66,11 +78,19 @@ class Post
 			@originalText=@data #so that hasChanged() now returns false
 		$('.publish').click (e)=>
 			if Potion.post.hasChanged()
-				@save ()->
+				@save ()=>
 					Potion.busy.show()
 					@publish()
 			else
 				@publish()
+		$('.unpublish').click (e)=>
+			#This is same as publish, except we move to drafts this time
+			if Potion.post.hasChanged()
+				@save ()=>
+					Potion.busy.show()
+					@unpublish()
+			else
+				@unpublish()
 		$('.previewbtn').click (e)=>
 			if e.target.innerText == 'Preview'
 				$('#editor textarea').hide()
