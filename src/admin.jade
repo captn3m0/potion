@@ -6,8 +6,10 @@
 				.busy.hidden
 			.subtext Editor for Jekyll blogs
 	.center-pane
-		h4 Drafts
-		ul
+		.clearfix
+			h4.f-left Drafts
+			button.btn.f-right#newPost New Post
+		ul.block
 			each file in drafts
 				li.file
 					a(href="#", data-draft="true", data-path="#{file.path}") #{file.name}
