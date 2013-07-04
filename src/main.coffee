@@ -4,7 +4,7 @@ class Post
 		Potion.github.repository.read Potion.github.branch, @path, (err, data) =>
 			if !err
 				@originalText = @data = data
-				cb? ()
+				cb?()
 			else
 				alert "There was an error in fetching this post"
 	#save:
@@ -23,10 +23,10 @@ class Post
 			sourceText = @data
 		converter.makeHtml sourceText
 	hasChanged: () ->
-		@originalText ! = @data
+		@originalText != @data
 	title: () ->
 		try
-			title = YAML.loadFront(@data) ['title']
+			title = YAML.loadFront(@data)['title']
 			title || "Untitled"
 		catch error
 			"Untitled"
@@ -43,7 +43,7 @@ class Post
 				alert "Post Saved"
 			else
 				alert "There was an error in saving your post. Are you logged in?"
-			cb? ()
+			cb?()
 	publish: ->
 		#Move it to _posts folder
 		newPath = "_posts/" + Potion.Util.basename(@path)
@@ -151,8 +151,8 @@ Potion =
 		choose: (repos) ->
 			Potion.render "choose", {list: repos}
 			$('#continue').click () ->
-				Potion.github.repo = $('#reponame').val().split('/') [1]
-				Potion.github.user = $('#reponame').val().split('/') [0]
+				Potion.github.repo = $('#reponame').val().split('/')[1]
+				Potion.github.user = $('#reponame').val().split('/')[0]
 				Potion.github.branch = $('#branchname').val()
 				#We store this data
 				#Make requests to github to get the list of files
@@ -219,14 +219,14 @@ Potion =
 			path = path.substr 0, path.lastIndexOf('.')
 			#remove the date
 			try
-				name = path.match( / \d{4} - \d{1, 2} - \d{1, 2} - (. * ) / ) [1]
+				name = path.match(/\d{4}-\d{1, 2}-\d{1,2}-(.*)/)[1]
 			catch err
 				#drafts are sometimes date-less in filenames
 				name = path
 			#Auto-return
 			name.replace(/-/g, ' ').toTitleCase()
 		basename: (path) ->
-			path.split('/').reverse() [0];
+			path.split('/').reverse()[0];
 
 $(document).ready () ->
 	Potion.init()
