@@ -219,7 +219,7 @@ Potion =
 			path = path.substr 0, path.lastIndexOf('.')
 			#remove the date
 			try
-				name = path.match(/\d{4}-\d{1, 2}-\d{1,2}-(.*)/)[1]
+				name = path.match(/\d{4}-\d{1,2}-\d{1,2}-(.*)/)[1]
 			catch err
 				#drafts are sometimes date-less in filenames
 				name = path

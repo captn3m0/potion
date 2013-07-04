@@ -6,7 +6,7 @@
 		.subtext Editor for Jekyll blogs
 	.login-div
 		h3.title Select Repository and Branch
-		select#reponame.repos
+		select#reponame.repos(autofocus)
 			each repo in list
 				option(value="#{repo.full_name}") #{repo.name}
 		input#branchname(placeholder="Branch Name", value="master")
