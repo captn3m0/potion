@@ -166,6 +166,19 @@ Potion =
 				Potion.busy.show()
 				Potion.post = new Post filePath, () ->
 					Potion.controller.editor()
+			$('#newPostBtn').click (e) ->
+				postFilePath = "_drafts/" + Potion.Util.titleToPath $('#newPostTitle').val()+".md"
+				#We create a blank file first and then allow the user to edit it
+				Potion.busy.show()
+				Potion.github.repository.write Potion.github.branch, postFilePath, "", "New blank post", "utf-8", (err) ->
+					if err
+						Potion.busy.hide()
+						alert "There was an error in creating the file. Are you logged in?"
+					else
+						Potion.post = new Post postFilePath, () ->
+							Potion.controller.editor()
+			$('#newPostTitle').keyup (e) ->
+				$('#newPostBtn').click() if e.keyCode == 13 && e.target.value.length>0
 		editor: () ->
 			Potion.github.repository.read Potion.github.branch, Potion.post.path, (err, data) ->
 				Potion.busy.hide()
@@ -227,6 +240,8 @@ Potion =
 			name.replace(/-/g, ' ').toTitleCase()
 		basename: (path) ->
 			path.split('/').reverse()[0];
+		titleToPath: (title) ->
+			title.replace(/\ /g, '-').toLowerCase().replace(/[^-.\w\s]/gi, '')
 
 $(document).ready () ->
 	Potion.init()

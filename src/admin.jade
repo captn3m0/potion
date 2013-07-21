@@ -8,7 +8,9 @@
 	.center-pane
 		.clearfix
 			h4.f-left Drafts
-			button.btn.f-right#newPost New Post
+			div.newpostholder
+				input#newPostTitle(placeholder="New post title")
+				button.btn.f-right#newPostBtn New Post
 		ul.block
 			each file in drafts
 				li.file
