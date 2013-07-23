@@ -25,3 +25,101 @@
 		border none
 	.notice 
 		margin-top 0px
+	select ~ input#branchname
+		margin-left 0px
+	.options.onMobile
+		position fixed
+		top 8px
+		right 20px
+		button.btn
+			padding 7px 16px 8px 16px
+			background none
+			border-bottom 2px #666 solid
+			border-radius 0px
+			margin-left 10px
+			&:hover
+				color #fff
+			&:active
+				color #ddd
+
+		button.btn.active
+			border-bottom-color #33b5e5
+
+	.left-pane
+		height auto
+		width auto
+		bottom initial
+		.main-title
+			display inline-block
+			text-align left
+			width auto
+	.center-pane
+		border none
+		margin-top 60px
+		width 96%
+		position absolute
+		left -110%
+		margin-left 20px
+		margin-right 0px
+		box-sizing border-box
+		padding 0
+		transition all .3s ease
+		
+
+		.newpostholder
+			clearfix()
+			#newPostTitle
+				font-family "Ubuntu Light"
+				font-size 20px
+				border none
+				background none
+				padding-bottom 10px
+				position absolute
+				right 100px
+				left 0px
+				display block
+				top -2px
+				float left
+				z-index 10
+				&:hover, &:active, &:focus
+					outline none
+				&:focus
+					border-bottom-color #33b5e5
+			#newPostBtn
+				padding 3px 12px 5px 12px
+				font-size 14px
+				position absolute
+				right 0
+				top -2px
+				z-index 10
+	ul.block
+		position relative
+		top 40px
+	.center-pane.active
+		left 0
+		h4.f-left
+			display block
+			position fixed
+			z-index 10
+			background-color #f0f0f0
+			top 33px
+			height 45px
+			width 110%
+			left -10px
+			border-bottom 1px #e0e0e0 solid
+			text-indent -9999px
+	.right-pane
+		right -100%
+		width 90%
+		margin-left 5%
+		position absolute
+		background-color #FFF
+		position absolute
+		top 60px
+		transition all .3s ease
+	.right-pane.active
+		z-index 100
+		right 0
+		left 0
+		width 96%
+		
