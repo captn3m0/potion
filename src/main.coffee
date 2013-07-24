@@ -19,7 +19,7 @@ class Post
 			yaml = YAML.loadFront(@data)
 			sourceText = yaml['__content']
 		catch err
-			#if no YAML was found, just accept complete blob as markdown
+			#if no YAML was found, just accept complete blob as markdown.
 			sourceText = @data
 		converter.makeHtml sourceText
 	hasChanged: () ->
@@ -191,6 +191,21 @@ Potion =
 
 	init: () ->
 		Potion.render "login", {} , Potion.controller.login
+
+		# Default .active on mobile layouts
+		if $(".options.onMobile").css('display') is 'block'
+			$("button.btn").eq(0).addClass('active')
+			$(".left-pane").addClass('active')
+
+		$(document).on 'click', '.options .btn', ->
+			action = $(this).attr 'data-action'
+			if action is 'draftsActive'
+				$(".right-pane, .options .btn[data-action='postsActive']").removeClass 'active'
+				$(".center-pane, .options .btn[data-action='draftsActive']").addClass 'active'
+			if action is 'postsActive'
+				console.log "rightone"
+				$(".center-pane, .options .btn[data-action='draftsActive']").removeClass 'active'
+				$(".right-pane, .options .btn[data-action='postsActive']").addClass 'active'
 	fixLayout: () ->
 		if not $("textarea").length then return
 		ratio = 900 / document.width
@@ -245,4 +260,4 @@ Potion =
 
 $(document).ready () ->
 	Potion.init()
-
+	
