@@ -1,4 +1,4 @@
-@media(max-width: 767px)
+@media(max-width: 848px)
 	.wrapper
 		z-index 100
 	.top-line 
@@ -124,3 +124,40 @@
 		left 0
 		width 96%
 		
+	.top-right.controls
+		top 70px
+		right 40px
+		border 1px #222 solid
+		width 50px
+		height 50px
+		box-sizing border-box
+		background-color #373737
+		opacity 0.7
+		&:after
+			position absolute
+			top 7px
+			left 14px
+			color #ddd
+			content '#'
+			usefont()
+			font-size 28px
+		br
+			display none
+		.btn
+			display none
+			background-color #393939
+			border-radius 0
+		&:hover
+			box-sizing none
+			background-color none
+			width auto
+			height auto
+			border none
+			opacity 1
+			&:after
+				display none
+			.btn
+				display block
+				border-bottom 1px #272727 solid
+				&:first-child
+					border-top 1px #272727 solid
