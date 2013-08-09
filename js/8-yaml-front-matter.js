@@ -10,3 +10,7 @@ YAML.loadFront = function (text, name) {
   }
   return conf;
 };
+YAML.createFront = function (data) {
+	var yaml = YAML.stringify(data);
+	return "---\n"+yaml+"---\n";
+}

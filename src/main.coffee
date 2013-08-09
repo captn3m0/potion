@@ -158,6 +158,8 @@ Potion =
 				#Make requests to github to get the list of files
 				Potion.busy.show()
 				Potion.Util.showFiles()
+
+
 		admin: (files) ->
 			$(".file a").click (e) ->
 				filePath = e.target.getAttribute('data-path')
@@ -170,7 +172,8 @@ Potion =
 				postFilePath = "_drafts/" + Potion.Util.titleToPath $('#newPostTitle').val()+".md"
 				#We create a blank file first and then allow the user to edit it
 				Potion.busy.show()
-				Potion.github.repository.write Potion.github.branch, postFilePath, "", "New blank post", "utf-8", (err) ->
+				Potion.defaultYAML.title = $('#newPostTitle').val()
+				Potion.github.repository.write Potion.github.branch, postFilePath, YAML.createFront(Potion.defaultYAML), "New blank post", "utf-8", (err) ->
 					if err
 						Potion.busy.hide()
 						alert "There was an error in creating the file. Are you logged in?"
@@ -203,7 +206,6 @@ Potion =
 				$(".right-pane, .options .btn[data-action='postsActive']").removeClass 'active'
 				$(".center-pane, .options .btn[data-action='draftsActive']").addClass 'active'
 			if action is 'postsActive'
-				console.log "rightone"
 				$(".center-pane, .options .btn[data-action='draftsActive']").removeClass 'active'
 				$(".right-pane, .options .btn[data-action='postsActive']").addClass 'active'
 	fixLayout: () ->
@@ -216,6 +218,13 @@ Potion =
 	Util:
 		getFiles: (cb) ->
 			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
+			Potion.github.repository.read Potion.github.branch, "_default.yml", (err, data) ->
+				if err
+					Potion.defaultYAML = 
+						title: "Untitled"
+						layout: "default"
+				else
+					Potion.defaultYAML = YAML.parse(data)
 			Potion.github.repository.getTree Potion.github.branch + '?recursive=true', (err, data) ->
 				#Break up the tree into drafts and posts
 				if !err
