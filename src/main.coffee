@@ -250,15 +250,16 @@ Potion =
 				else
 					Potion.render "admin", {drafts: drafts, posts: posts} , Potion.controller.admin
 		pathToName: (path) ->
-			#get the basename
+			#Get the basename
 			path = Potion.Util.basename path
 			#Remove the extension
-			path = path.substr 0, path.lastIndexOf('.')
+			path = path.substr( 0, path.lastIndexOf '.')|| path
 			#remove the date
 			try
 				name = path.match(/\d{4}-\d{1,2}-\d{1,2}-(.*)/)[1]
 			catch err
 				#drafts are sometimes date-less in filenames
+				#This is in-fact, what jeykll recommends for drafts.
 				name = path
 			#Auto-return
 			name.replace(/-/g, ' ').toTitleCase()
