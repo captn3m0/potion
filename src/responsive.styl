@@ -1,9 +1,11 @@
+body
+	margin 0
 .wrapper
 	z-index 100
 .top-line 
 	height 60px
 .main-title
-	margin-top 0
+	margin-top 10px
 	font-size 30px
 	color #DDD
 	.subtext
@@ -22,8 +24,18 @@
 	margin-right 5%
 	width 90%
 	border none
+.login-div
+	width 100%
+	height 400px
+	margin 0
+	padding 10px
+	position relative
+	top 4px
 .notice 
 	margin-top 0px
+	margin-left 0
+	margin-right 0
+	width 100%
 select ~ input#branchname
 	margin-left 0px
 .options.onMobile
@@ -138,7 +150,7 @@ ul.block
 	height 50px
 	box-sizing border-box
 	background-color #373737
-	opacity 1
+	opacity 0.85
 	border-radius 2px
 	&:after
 		position absolute
@@ -165,7 +177,7 @@ ul.block
 		width auto
 		height auto
 		border none
-		opacity 1
+		opacity 0.92
 		&:after
 			display none
 		.btn
@@ -185,3 +197,16 @@ h2.title
 	padding-top 8px
 	margin 0
 	text-align right
+.preview
+	font-size 1.2em
+	margin 0 20px 0 13px
+	padding-top 10px
+	color #666
+	a
+		color darken(#666, 20%)
+		&:hover
+			color darken(#666, 10%)
+		&:active
+			color darken(#33b5e5, 2%)
+		&:visited
+			color darken(#33b5e5, 20%)
