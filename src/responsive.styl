@@ -10,7 +10,7 @@
 		display none
 
 .main-title.inleft
-	position absolute
+	position fixed
 	top 0
 	left 0
 	z-index 200
@@ -50,9 +50,16 @@ select ~ input#branchname
 	width auto
 	bottom initial
 	.main-title
+		position fixed
+		left 0px
+		top 0
 		display inline-block
 		text-align left
-		width auto
+		width 125px
+		margin -5px 10px 0 0
+		padding 13px 20px
+		background-color #252525
+		box-shadow inset -10px 0px 30px 0px rgba(#000,0.2)
 .center-pane
 	border none
 	margin-top 60px
@@ -166,3 +173,14 @@ ul.block
 			border-bottom 1px #272727 solid
 			&:first-child
 				border-top 1px #272727 solid
+h2.title
+	color #fff
+	display inline-block
+	float right
+	width auto
+	overflow hidden
+	text-overflow ellipsis
+	white-space nowrap
+	width 52%
+	padding-top 8px
+	margin 0
