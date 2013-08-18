@@ -84,9 +84,7 @@ select ~ input#branchname
 	margin-right 0px
 	box-sizing border-box
 	padding 0
-	transition all .3s ease
-	
-
+	transition left .3s ease-in-out
 	.newpostholder
 		clearfix()
 		#newPostTitle
@@ -99,7 +97,7 @@ select ~ input#branchname
 			right 100px
 			left 0px
 			display block
-			top -2px
+			top 6px
 			float left
 			z-index 10
 			&:hover, &:active, &:focus
@@ -110,25 +108,35 @@ select ~ input#branchname
 			padding 3px 12px 5px 12px
 			font-size 14px
 			position absolute
-			right 0
-			top -2px
+			right 20px
+			top 6px
 			z-index 10
 ul.block
 	position relative
 	top 40px
+	right 4px
+	left 2px
+	margin 0
+	padding-top 10px
+	overflow hidden
+	overflow-y scroll
+	margin-right 6px
+.center-pane h4.f-left
+	display block
+	position fixed
+	z-index 10
+	background-color #f0f0f0
+	top 33px
+	height 45px
+	width 110%
+	left -110%
+	border-bottom 1px #e0e0e0 solid
+	text-indent -9999px
+	transition left .3s ease
 .center-pane.active
 	left 0
 	h4.f-left
-		display block
-		position fixed
-		z-index 10
-		background-color #f0f0f0
-		top 33px
-		height 45px
-		width 110%
 		left -10px
-		border-bottom 1px #e0e0e0 solid
-		text-indent -9999px
 .right-pane
 	right -100%
 	width 90%
@@ -137,9 +145,9 @@ ul.block
 	background-color #FFF
 	position absolute
 	top 60px
-	transition all .3s ease
+	transition position .3s ease-in-out
 .right-pane.active
-	z-index 100
+	z-index 2000
 	right 0
 	left 0
 	width 96%
@@ -196,7 +204,8 @@ h2.title
 	text-overflow ellipsis
 	white-space nowrap
 	width 52%
-	padding-top 8px
+	padding-top 18px
+	padding-right 20px
 	margin 0
 	text-align right
 .preview

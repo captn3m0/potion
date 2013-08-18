@@ -162,6 +162,9 @@ Potion =
 
 
 		admin: (files) ->
+			Potion.fixLayout()
+			$(".right-pane, .options .btn[data-action='postsActive']").removeClass 'active'
+			$(".center-pane, .options .btn[data-action='draftsActive']").addClass 'active'
 			$(".file a").click (e) ->
 				filePath = e.target.getAttribute('data-path')
 				draft = true if e.target.getAttribute('data-draft') == "true"
@@ -219,6 +222,11 @@ Potion =
 			$(".login-div").css {
 				'height': (document.height - $(".top-line")[0].offsetHeight).toString() + 'px'
 			}
+		if $(".center-pane ul.block").length
+			$(".center-pane ul.block").css {
+				'height': (document.height - 106).toString() + 'px'
+			}
+		
 	Util:
 		getFiles: (cb) ->
 			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
