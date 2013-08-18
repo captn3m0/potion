@@ -108,10 +108,10 @@ select ~ input#branchname
 			padding 3px 12px 5px 12px
 			font-size 14px
 			position absolute
-			right 20px
+			right 38px
 			top 6px
 			z-index 10
-ul.block
+ul.drafts-list
 	position relative
 	top 40px
 	right 4px
@@ -135,6 +135,8 @@ ul.block
 	transition left .3s ease
 .center-pane.active
 	left 0
+	padding-right 17px
+	width 100%
 	h4.f-left
 		left -10px
 .right-pane
@@ -221,3 +223,12 @@ h2.title
 			color darken(#33b5e5, 2%)
 		&:visited
 			color darken(#33b5e5, 20%)
+
+.right-pane
+	ul.published-list
+		box-sizing border-box
+		padding-top 10px
+		padding-right 15px
+		overflow hidden
+		overflow-y scroll
+		margin-right 4px

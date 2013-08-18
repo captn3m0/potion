@@ -222,11 +222,15 @@ Potion =
 			$(".login-div").css {
 				'height': (document.height - $(".top-line")[0].offsetHeight).toString() + 'px'
 			}
-		if $(".center-pane ul.block").length
-			$(".center-pane ul.block").css {
+		if $(".center-pane ul.drafts-list").length
+			$(".center-pane ul.drafts-list").css {
 				'height': (document.height - 106).toString() + 'px'
 			}
-		
+		if $(".right-pane ul.published-list").length
+			$(".right-pane ul.published-list").css {
+				'height': (document.height - 60).toString() + 'px'
+			}
+
 	Util:
 		getFiles: (cb) ->
 			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
