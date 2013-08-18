@@ -114,6 +114,7 @@ Potion =
 	controller:
 		#Login controller handles login information
 		login: () ->
+			Potion.fixLayout()
 			$('#password,#username').keyup (e) ->
 				$('#login').click() if e.keyCode == 13
 			$('#login').click () ->
@@ -189,8 +190,6 @@ Potion =
 				Potion.render "editor", Potion.post, () ->
 					Potion.post.attachEvents()
 					Potion.fixLayout()
-					$(window).on 'resize', (e)->
-						Potion.fixLayout()
 
 	init: () ->
 		Potion.render "login", {} , Potion.controller.login
@@ -209,12 +208,17 @@ Potion =
 				$(".center-pane, .options .btn[data-action='draftsActive']").removeClass 'active'
 				$(".right-pane, .options .btn[data-action='postsActive']").addClass 'active'
 	fixLayout: () ->
-		if not $("textarea").length then return
-		ratio = 900 / document.width
-		$("textarea").css
-			'left': (document.width - 900) / 2
-			'right': (document.width - 900) / 2
-			'max-width': parseInt(document.width*ratio).toString() + 'px'
+		if $("textarea").length
+			ratio = 900 / document.width
+			$("textarea").css
+				'left': (document.width - 900) / 2
+				'right': (document.width - 900) / 2
+				'max-width': parseInt(document.width*ratio).toString() + 'px'
+		if $(".login-div").length
+			# Scrollbar Fix
+			$(".login-div").css {
+				'height': (document.height - $(".top-line")[0].offsetHeight).toString() + 'px'
+			}
 	Util:
 		getFiles: (cb) ->
 			Potion.github.repository = Potion.github.getRepo Potion.github.user, Potion.github.repo
@@ -268,6 +272,9 @@ Potion =
 		titleToPath: (title) ->
 			title.replace(/\ /g, '-').toLowerCase().replace(/[^-.\w\s]/gi, '')
 
+
+
 $(document).ready () ->
 	Potion.init()
-	
+	$(window).on 'resize', (e)->
+		Potion.fixLayout()
