@@ -189,8 +189,8 @@ Potion =
 				Potion.render "editor", Potion.post, () ->
 					Potion.post.attachEvents()
 					Potion.fixLayout()
-					$(window).bind('load').on 'load', Potion.fixLayout()
-					$(window).bind('resize').on 'resize', Potion.fixLayout()
+					$(window).on 'resize', (e)->
+						Potion.fixLayout()
 
 	init: () ->
 		Potion.render "login", {} , Potion.controller.login
