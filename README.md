@@ -52,3 +52,6 @@ You can setup Potion as a sublime project by copying the `sample.sublime-project
 ##Contributors
 - Abhay Rana <me@captnemo.in>
 - Tushar Kant <nanu.clickity@gmail.com>
+
+##Licence
+Licenced under the MIT Licence.
